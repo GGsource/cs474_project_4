@@ -5,8 +5,10 @@
 //  Description: This is the main file for Project 4, building an Assembly
 //  Language Interpreter in C++.
 //////////////////////////////////////////////////////////////////////////////////
+#include "Memory.h"
 #include <fstream>
 #include <iostream>
+
 
 // Function for trimming the whitespace off of strings
 std::string &rtrim(std::string &givenString,
@@ -30,4 +32,5 @@ int main() {
 		input = "tests/" + input;
 	}
 	// Should now have correct folder of file
+	Memory mem;
 }
