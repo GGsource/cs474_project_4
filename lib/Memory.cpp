@@ -5,7 +5,7 @@
 
 // Constructor
 Memory::Memory() {
-	internalProgramArray = new SAL[128];
+	internalProgramArray = new SAL *[128];
 	internalDataArray = new std::string[128];
 	registerA = registerB = pc = zeroResultBit = overflowBit = prevhc = curhc =
 		0;
@@ -16,7 +16,7 @@ Memory::Memory() {
 
 // Executing a single line of instruction
 void Memory::executeSingle() {
-	internalProgramArray[pc].execute();
+	internalProgramArray[pc]->execute();
 	curhc += 1;
 	if (prevhc + 1000 == curhc) {
 		loopWarn = true;

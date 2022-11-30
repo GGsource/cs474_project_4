@@ -7,7 +7,7 @@ class SAL;
 
 class Memory {
   public:
-	SAL *internalProgramArray;
+	SAL **internalProgramArray;
 	std::string *internalDataArray;
 	int registerA, registerB, pc, zeroResultBit, overflowBit, prevhc, curhc, mc;
 	std::unordered_map<std::string, int> *symbolAddresses;
