@@ -7,6 +7,7 @@ std::string SAL::to_s() {
 	return "print SAL was called...";
 }
 // TODO: SAL Needs a virtual destructor that derived classes can call
+// TODO: Use valgrind to check for leaks
 
 // DONE: DEC - Declares a symbolic variable & stores in memory
 DEC::DEC(std::string givenSymbol, Memory &memory) {
