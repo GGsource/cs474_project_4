@@ -1,22 +1,53 @@
 #include "Instructions.h"
 #include <cmath>
+#include <iostream>
 #include <string>
 
+// SAL Constructor
+SAL::SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
+		 std::string givenArg)
+	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {
+	// DEBUGGING:
+	std::cout << "SAL Instructor called!" << std::endl;
+}
+
+// DONE: Implement printing SAL
 std::string SAL::to_s() {
-	// TODO: Implement printing SAL
-	return "print SAL was called...";
+	// DEBUGGING:
+	std::cout
+		<< "Now inside instruction print function! About to access opCode..."
+		<< std::endl;
+	// DEBUGGING:
+	std::cout << "opCode is " + opCode + "btw" << std::endl;
+	std::string s;
+
+	if (!opCode.empty()) {
+		s += opCode;
+	};
+
+	// DEBUGGING:
+	std::cout
+		<< "Successfully accessed opCode, now going to check if arg is empty..."
+		<< std::endl;
+
+	if (!arg.empty()) {
+		// DEBUGGING:
+		std::cout << "Inside arg checking statement.. now going to use argtype"
+				  << std::endl;
+		s += " with " + argType + " argument of " + arg;
+	}
+
+	// DEBUGGING:
+	std::cout << "Successfully checked arg!" << std::endl;
+
+	return s;
 }
 // TODO: SAL Needs a virtual destructor that derived classes can call
 // TODO: Use valgrind to check for leaks
 
 // DONE: DEC - Declares a symbolic variable & stores in memory
-DEC::DEC(std::string givenSymbol, Memory &memory) {
-	// FIXME: convert this to initialization list
-	opCode = "DEC";
-	argType = "STRING";
-	arg = givenSymbol;
-	mem = &memory;
-}
+DEC::DEC(std::string givenSymbol, Memory &givenMemory)
+	: SAL(givenMemory, "DEC", "STRING", givenSymbol) {}
 void DEC::execute() {
 	mem->internalDataArray[mem->mc] = "xxx";
 	mem->symbolAddresses->at(arg) = mem->mc;
@@ -24,12 +55,8 @@ void DEC::execute() {
 	mem->pc += 1;
 }
 // DONE: LDX - LDA and LDB take given symbol value and store it in the register
-LDX::LDX(std::string instruction, std::string givenSymbol, Memory &memory) {
-	opCode = instruction;
-	argType = "STRING";
-	arg = givenSymbol;
-	mem = &memory;
-}
+LDX::LDX(std::string instruction, std::string givenSymbol, Memory &givenMemory)
+	: SAL(givenMemory, instruction, "STRING", givenSymbol) {}
 void LDX::execute() {
 	if (opCode == "LDA") {
 		mem->registerA =
@@ -43,12 +70,8 @@ void LDX::execute() {
 
 // DONE: LDI - Loads the integer value into the accumulator register. The value
 // could be negative
-LDI::LDI(std::string givenVal, Memory &memory) {
-	opCode = "LDI";
-	argType = "NUMBER";
-	mem = &memory;
-	arg = givenVal;
-}
+LDI::LDI(std::string givenVal, Memory &givenMemory)
+	: SAL(givenMemory, "LDI", "NUMBER", givenVal) {}
 void LDI::execute() {
 	mem->registerA = std::stoi(arg);
 	mem->pc += 1;
@@ -56,12 +79,8 @@ void LDI::execute() {
 
 // DONE: STR - Stores content of accumulator into data memory at address of
 // symbol.
-STR::STR(std::string givenSymbol, Memory &memory) {
-	opCode = "STR";
-	argType = "STRING";
-	arg = givenSymbol;
-	mem = &memory;
-}
+STR::STR(std::string givenSymbol, Memory &givenMemory)
+	: SAL(givenMemory, "STR", "STRING", givenSymbol) {}
 void STR::execute() {
 	mem->internalDataArray[mem->symbolAddresses->at(arg)] =
 		std::to_string(mem->registerA);
@@ -69,11 +88,7 @@ void STR::execute() {
 }
 
 // DONE: XCH - Exchanges the content registers A and B.
-XCH::XCH(Memory &memory) {
-	opCode = "XCH";
-	argType = "NONE";
-	mem = &memory;
-}
+XCH::XCH(Memory &givenMemory) : SAL(givenMemory, "XCH", "NONE", "") {}
 void XCH::execute() {
 	int temp = mem->registerA;
 	mem->registerA = mem->registerB;
@@ -83,22 +98,14 @@ void XCH::execute() {
 
 // DONE: JMP - Transfers control to instruction at address number in program
 // memory.
-JMP::JMP(std::string givenAddress, Memory &memory) {
-	opCode = "JMP";
-	argType = "NUMBER";
-	mem = &memory;
-	arg = givenAddress;
-}
+JMP::JMP(std::string givenAddress, Memory &givenMemory)
+	: SAL(givenMemory, "JMP", "NUMBER", givenAddress) {}
 void JMP::execute() { mem->pc = std::stoi(arg); }
 
 // DONE: JXS - JZS & JVS Transfer control to instruction at address number if
 // the zero-result bit or overlfow bit is set respectively.
-JXS::JXS(std::string givenAddress, std::string instruction, Memory &memory) {
-	opCode = instruction;
-	argType = "NUMBER";
-	mem = &memory;
-	arg = givenAddress;
-}
+JXS::JXS(std::string givenAddress, std::string instruction, Memory &givenMemory)
+	: SAL(givenMemory, instruction, "NUMBER", givenAddress) {}
 void JXS::execute() {
 	if ((opCode == "JZS" && mem->zeroResultBit == 1) ||
 		(opCode == "JVS" && mem->overflowBit == 1)) {
@@ -110,11 +117,7 @@ void JXS::execute() {
 
 // DONE: ADD - Adds registers A and B. Sum is stored in A. The overflow and
 // zero-result bits are set or cleared
-ADD::ADD(Memory &memory) {
-	opCode = "ADD";
-	argType = "NONE";
-	mem = &memory;
-}
+ADD::ADD(Memory &givenMemory) : SAL(givenMemory, "ADD", "NONE", "") {}
 void ADD::execute() {
 	if ((mem->registerA + mem->registerB) > (pow(2, 31) - 1) ||
 		(mem->registerA + mem->registerB) < -1 * (pow(2, 31))) {
@@ -131,11 +134,7 @@ void ADD::execute() {
 	mem->pc += 1;
 }
 // DONE: HLT - Terminates program execution.
-HLT::HLT(Memory &memory) {
-	opCode = "HLT";
-	argType = "NONE";
-	mem = &memory;
-}
+HLT::HLT(Memory &givenMemory) : SAL(givenMemory, "HLT", "NONE", "") {}
 void HLT::execute() { mem->pc = -1; }
 
 SAL *parseInstruction(std::string line, Memory &memory) {

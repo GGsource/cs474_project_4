@@ -5,56 +5,60 @@
 
 class SAL {
   public:
-	std::string opCode, argType, arg;
 	Memory *mem;
+	std::string opCode = "";
+	std::string argType = "";
+	std::string arg = "";
 
+	SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
+		std::string givenArg);
 	virtual void execute() = 0;
 	std::string to_s();
 };
 
 class DEC : public SAL {
   public:
-	DEC(std::string givenSymbol, Memory &memory);
+	DEC(std::string givenSymbol, Memory &givenMemory);
 	void execute();
 };
 class LDX : public SAL {
   public:
-	LDX(std::string instruction, std::string givenSymbol, Memory &memory);
+	LDX(std::string instruction, std::string givenSymbol, Memory &givenMemory);
 	void execute();
 };
 class LDI : public SAL {
   public:
-	LDI(std::string givenVal, Memory &memory);
+	LDI(std::string givenVal, Memory &givenMemory);
 	void execute();
 };
 class STR : public SAL {
   public:
-	STR(std::string givenSymbol, Memory &memory);
+	STR(std::string givenSymbol, Memory &givenMemory);
 	void execute();
 };
 class XCH : public SAL {
   public:
-	XCH(Memory &memory);
+	XCH(Memory &givenMemory);
 	void execute();
 };
 class JMP : public SAL {
   public:
-	JMP(std::string givenAddress, Memory &memory);
+	JMP(std::string givenAddress, Memory &givenMemory);
 	void execute();
 };
 class JXS : public SAL {
   public:
-	JXS(std::string givenAddress, std::string instruction, Memory &memory);
+	JXS(std::string givenAddress, std::string instruction, Memory &givenMemory);
 	void execute();
 };
 class ADD : public SAL {
   public:
-	ADD(Memory &memory);
+	ADD(Memory &givenMemory);
 	void execute();
 };
 class HLT : public SAL {
   public:
-	HLT(Memory &memory);
+	HLT(Memory &givenMemory);
 	void execute();
 };
 
