@@ -3,11 +3,11 @@
 #include <string>
 #include <unordered_map>
 
-class SAL;
+class Instruction;
 
 class Memory {
   public:
-	SAL **internalProgramArray;
+	Instruction **internalProgramArray;
 	std::string *internalDataArray;
 	int registerA, registerB, pc, zeroResultBit, overflowBit, prevhc, curhc, mc;
 	std::unordered_map<std::string, int> *symbolAddresses;

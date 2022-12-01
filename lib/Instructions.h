@@ -3,65 +3,65 @@
 #include "Memory.h"
 #include <string>
 
-class SAL {
+class Instruction {
   public:
 	Memory *mem;
 	std::string opCode = "";
 	std::string argType = "";
 	std::string arg = "";
 
-	SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
-		std::string givenArg);
-	virtual ~SAL();
+	Instruction(Memory &memory, std::string givenOpCode,
+				std::string givenArgType, std::string givenArg);
+	virtual ~Instruction();
 	virtual void execute() = 0;
 	std::string to_s();
 };
 
-class DEC : public SAL {
+class DEC : public Instruction {
   public:
 	DEC(std::string givenSymbol, Memory &givenMemory);
 	void execute();
 };
-class LDX : public SAL {
+class LDX : public Instruction {
   public:
 	LDX(std::string instruction, std::string givenSymbol, Memory &givenMemory);
 	void execute();
 };
-class LDI : public SAL {
+class LDI : public Instruction {
   public:
 	LDI(std::string givenVal, Memory &givenMemory);
 	void execute();
 };
-class STR : public SAL {
+class STR : public Instruction {
   public:
 	STR(std::string givenSymbol, Memory &givenMemory);
 	void execute();
 };
-class XCH : public SAL {
+class XCH : public Instruction {
   public:
 	XCH(Memory &givenMemory);
 	void execute();
 };
-class JMP : public SAL {
+class JMP : public Instruction {
   public:
 	JMP(std::string givenAddress, Memory &givenMemory);
 	void execute();
 };
-class JXS : public SAL {
+class JXS : public Instruction {
   public:
 	JXS(std::string givenAddress, std::string instruction, Memory &givenMemory);
 	void execute();
 };
-class ADD : public SAL {
+class ADD : public Instruction {
   public:
 	ADD(Memory &givenMemory);
 	void execute();
 };
-class HLT : public SAL {
+class HLT : public Instruction {
   public:
 	HLT(Memory &givenMemory);
 	void execute();
 };
 
-SAL *parseInstruction(std::string line, Memory &memory);
+Instruction *parseInstruction(std::string line, Memory &memory);
 #endif

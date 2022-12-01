@@ -6,7 +6,7 @@
 
 // Constructor
 Memory::Memory() {
-	internalProgramArray = new SAL *[128];
+	internalProgramArray = new Instruction *[128];
 	for (int i = 0; i < 128; i++) {
 		internalProgramArray[i] = nullptr;
 	}
