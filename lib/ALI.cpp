@@ -44,43 +44,44 @@ bool ALI::reachedEnd() {
 }
 
 // Allow ALI to be printed to console
-std::string ALI::to_s() {
+void ALI::print() {
 	// DONE: implement printing ALI
 
 	// Print instructions first
-	std::string returnString = _title("Instructions", '-');
+	std::cout << _title("Instructions", '-');
 	for (int i = 0; i < 128; i++) {
 		if (this->internalProgramArray[i] != nullptr) {
-			returnString +=
-				std::to_string(i) + ". " + internalProgramArray[i]->print();
+			std::cout << std::to_string(i) << ". ";
+			internalProgramArray[i]->print();
 			if (i == this->pc) {
-				returnString += "      <===== PC is currently here";
+				std::cout << "      <===== PC is currently here";
 			}
-			returnString += "\n";
+			std::cout << std::endl;
 		}
 	}
 	// Print data section next
-	returnString += _title("Memory", '-');
+	std::cout << _title("Memory", '-');
 	if (this->mc > 0) {
 		for (int i = 0; i < this->mc; i++) {
-			returnString += std::to_string(i + 128) + ". " +
-							this->internalDataArray[i] + "\n";
+			std::cout << std::to_string(i + 128) + ". " +
+							 this->internalDataArray[i]
+					  << std::endl;
 		}
 	} else {
-		returnString += _title("Memory is currently empty.", ' ');
+		std::cout << _title("Memory is currently empty.", ' ');
 	}
 
 	// Print Bits and registers
-	returnString += _title("Bits & Regs", '-');
-	returnString +=
-		"zeroResultBit = " + std::to_string(this->zeroResultBit) + "\n";
-	returnString += "overflowBit = " + std::to_string(this->overflowBit) + "\n";
-	returnString += "registerA = " + std::to_string(this->registerA) + "\n";
-	returnString += "registerB = " + std::to_string(this->registerB) + "\n";
-	returnString += _title("Symbol Table", '-');
-	returnString += printSymbolMap(*(this->symbolAddresses));
-
-	return returnString;
+	std::cout << _title("Bits & Regs", '-');
+	std::cout << "zeroResultBit = " << std::to_string(this->zeroResultBit)
+			  << std::endl;
+	std::cout << "overflowBit = " << std::to_string(this->overflowBit)
+			  << std::endl;
+	std::cout << "registerA = " << std::to_string(this->registerA) << std::endl;
+	std::cout << "registerB = " << std::to_string(this->registerB) << std::endl;
+	std::cout << _title("Symbol Table", '-');
+	std::cout << printSymbolMap(*(this->symbolAddresses));
+	std::cout << std::endl;
 }
 
 // DONE: Implement _title

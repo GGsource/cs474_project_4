@@ -57,7 +57,7 @@ int main() {
 	// Main Loop
 	while (!mem.reachedEnd()) {
 		// First print the memory structure
-		std::cout << mem.to_s() << std::endl;
+		mem.print();
 		// Now print the command options
 		std::cout << "s - Execute a single line of code, starting from the "
 					 "instruction at memory address 0; update the PC, the "
@@ -102,7 +102,7 @@ int main() {
 					}
 				}
 			}
-			std::cout << mem.to_s() << std::endl;
+			mem.print();
 			break;
 		} else if (cmd == "q") {
 			break;

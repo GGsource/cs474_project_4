@@ -10,7 +10,7 @@ Instruction::Instruction(ALI &memory, std::string givenOpCode,
 	  argValue(givenArg) {}
 
 // DONE: Implement printing SAL
-std::string Instruction::print() {
+void Instruction::print() {
 	std::string s;
 
 	if (!printString.empty()) {
@@ -20,7 +20,7 @@ std::string Instruction::print() {
 	if (!argValue.empty()) {
 		s += " with " + argType + " argument of " + argValue;
 	}
-	return s;
+	std::cout << s;
 }
 // DONE SAL Virtual Destructor
 Instruction::~Instruction() {}
