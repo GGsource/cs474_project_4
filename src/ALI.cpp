@@ -80,7 +80,7 @@ void ALI::print() {
 	std::cout << "registerA = " << std::to_string(this->registerA) << std::endl;
 	std::cout << "registerB = " << std::to_string(this->registerB) << std::endl;
 	std::cout << _title("Symbol Table", '-');
-	std::cout << printSymbolMap(*(this->symbolAddresses));
+	printSymbolMap(*(this->symbolAddresses));
 	std::cout << std::endl;
 }
 
@@ -91,10 +91,9 @@ std::string ALI::_title(std::string s, char delimiter) {
 	return side + s + side + "\n";
 }
 // DONE: Implement printing symbols
-std::string ALI::printSymbolMap(std::unordered_map<std::string, int> map) {
-	std::string s;
+void ALI::printSymbolMap(std::unordered_map<std::string, int> map) {
 	for (auto &pair : map) {
-		s += "{" + pair.first + ": " + std::to_string(pair.second) + "}\n";
+		std::cout << "{" << pair.first << ": "
+				  << std::to_string(pair.second + 128) << "}" << std::endl;
 	}
-	return s;
 }

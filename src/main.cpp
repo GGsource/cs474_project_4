@@ -5,8 +5,8 @@
 //  Description: This is the main file for Project 4, building an Assembly
 //  Language Interpreter in C++.
 //////////////////////////////////////////////////////////////////////////////////
+#include "ALI.h"
 #include "Instructions.h"
-#include "Memory.h"
 #include "algorithm"
 #include <cctype>
 #include <fstream>

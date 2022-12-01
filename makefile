@@ -1,9 +1,7 @@
 all: compile run
 
-tests: compile_tests run_tests
-
 compile:
-	g++ .\lib\main.cpp .\lib\Instructions.cpp .\lib\ALI.cpp -Ilib -o project4
+	g++ .\src\main.cpp .\src\Instructions.cpp .\src\ALI.cpp -Isrc -o project4
 run:
 	project4
 
