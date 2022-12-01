@@ -28,8 +28,8 @@ std::string SAL::to_s() {
 DEC::DEC(std::string givenSymbol, Memory &givenMemory)
 	: SAL(givenMemory, "DEC", "STRING", givenSymbol) {}
 void DEC::execute() {
-	mem->internalDataArray[mem->mc] = "xxx";
-	mem->symbolAddresses->at(arg) = mem->mc;
+	mem->internalDataArray[mem->mc] = " ";
+	mem->symbolAddresses->insert({arg, mem->mc});
 	mem->mc += 1;
 	mem->pc += 1;
 }
@@ -98,8 +98,10 @@ void JXS::execute() {
 // zero-result bits are set or cleared
 ADD::ADD(Memory &givenMemory) : SAL(givenMemory, "ADD", "NONE", "") {}
 void ADD::execute() {
-	if ((mem->registerA + mem->registerB) > (pow(2, 31) - 1) ||
-		(mem->registerA + mem->registerB) < -1 * (pow(2, 31))) {
+	if (mem->registerA < 0 && mem->registerB < 0 &&
+			(mem->registerA + mem->registerB) > 0 ||
+		mem->registerA > 0 && mem->registerB > 0 &&
+			(mem->registerA + mem->registerB) < 0) {
 		mem->overflowBit = 1;
 	} else {
 		mem->overflowBit = 0;
@@ -118,7 +120,10 @@ void HLT::execute() { mem->pc = -1; }
 
 SAL *parseInstruction(std::string line, Memory &memory) {
 	std::string instruction = line.substr(0, 3);
-	std::string arg = line.substr(3);
+	std::string arg = "";
+	if (line.length() > 3) {
+		arg = line.substr(4);
+	}
 
 	if (instruction == "DEC") {
 		return new DEC(arg, memory);
