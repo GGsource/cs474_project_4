@@ -1,11 +1,11 @@
-#ifndef MEM_INCLUDED
-#define MEM_INCLUDED
+#ifndef ALI_INCLUDED
+#define ALI_INCLUDED
 #include <string>
 #include <unordered_map>
 
 class Instruction;
 
-class Memory {
+class ALI {
   public:
 	Instruction **internalProgramArray;
 	std::string *internalDataArray;
@@ -14,11 +14,11 @@ class Memory {
 	bool loopWarn;
 	void executeSingle(); // Executes one line
 	bool reachedEnd();	  // Check if pc is out of bounds
-	std::string to_s();	  // Make memory printable
+	std::string to_s();	  // Make ALI printable
 	std::string _title(std::string title, char delimiter);
 	std::string printSymbolMap(std::unordered_map<std::string, int> map);
 
-	Memory();
-	~Memory();
+	ALI();
+	~ALI();
 };
 #endif

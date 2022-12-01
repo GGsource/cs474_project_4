@@ -38,7 +38,7 @@ int main() {
 		input = "tests/" + input;
 	}
 	// Should now have correct folder of file
-	Memory mem;
+	ALI mem;
 
 	std::ifstream input_file(input);
 	if (!input_file.is_open()) {

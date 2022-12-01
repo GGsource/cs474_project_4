@@ -4,7 +4,7 @@
 #include <string>
 
 // DONE SAL Constructor
-Instruction::Instruction(Memory &memory, std::string givenOpCode,
+Instruction::Instruction(ALI &memory, std::string givenOpCode,
 						 std::string givenArgType, std::string givenArg)
 	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {}
 
@@ -25,7 +25,7 @@ std::string Instruction::to_s() {
 Instruction::~Instruction() {}
 
 // DONE: DEC - Declares a symbolic variable & stores in memory
-DEC::DEC(std::string givenSymbol, Memory &givenMemory)
+DEC::DEC(std::string givenSymbol, ALI &givenMemory)
 	: Instruction(givenMemory, "DEC", "STRING", givenSymbol) {}
 void DEC::execute() {
 	mem->internalDataArray[mem->mc] = " ";
@@ -34,7 +34,7 @@ void DEC::execute() {
 	mem->pc += 1;
 }
 // DONE: LDX - LDA and LDB take given symbol value and store it in the register
-LDX::LDX(std::string instruction, std::string givenSymbol, Memory &givenMemory)
+LDX::LDX(std::string instruction, std::string givenSymbol, ALI &givenMemory)
 	: Instruction(givenMemory, instruction, "STRING", givenSymbol) {}
 void LDX::execute() {
 	if (opCode == "LDA") {
@@ -49,7 +49,7 @@ void LDX::execute() {
 
 // DONE: LDI - Loads the integer value into the accumulator register. The value
 // could be negative
-LDI::LDI(std::string givenVal, Memory &givenMemory)
+LDI::LDI(std::string givenVal, ALI &givenMemory)
 	: Instruction(givenMemory, "LDI", "NUMBER", givenVal) {}
 void LDI::execute() {
 	mem->registerA = std::stoi(arg);
@@ -58,7 +58,7 @@ void LDI::execute() {
 
 // DONE: STR - Stores content of accumulator into data memory at address of
 // symbol.
-STR::STR(std::string givenSymbol, Memory &givenMemory)
+STR::STR(std::string givenSymbol, ALI &givenMemory)
 	: Instruction(givenMemory, "STR", "STRING", givenSymbol) {}
 void STR::execute() {
 	mem->internalDataArray[mem->symbolAddresses->at(arg)] =
@@ -67,7 +67,7 @@ void STR::execute() {
 }
 
 // DONE: XCH - Exchanges the content registers A and B.
-XCH::XCH(Memory &givenMemory) : Instruction(givenMemory, "XCH", "NONE", "") {}
+XCH::XCH(ALI &givenMemory) : Instruction(givenMemory, "XCH", "NONE", "") {}
 void XCH::execute() {
 	int temp = mem->registerA;
 	mem->registerA = mem->registerB;
@@ -77,13 +77,13 @@ void XCH::execute() {
 
 // DONE: JMP - Transfers control to instruction at address number in program
 // memory.
-JMP::JMP(std::string givenAddress, Memory &givenMemory)
+JMP::JMP(std::string givenAddress, ALI &givenMemory)
 	: Instruction(givenMemory, "JMP", "NUMBER", givenAddress) {}
 void JMP::execute() { mem->pc = std::stoi(arg); }
 
 // DONE: JXS - JZS & JVS Transfer control to instruction at address number if
 // the zero-result bit or overlfow bit is set respectively.
-JXS::JXS(std::string givenAddress, std::string instruction, Memory &givenMemory)
+JXS::JXS(std::string givenAddress, std::string instruction, ALI &givenMemory)
 	: Instruction(givenMemory, instruction, "NUMBER", givenAddress) {}
 void JXS::execute() {
 	if ((opCode == "JZS" && mem->zeroResultBit == 1) ||
@@ -96,7 +96,7 @@ void JXS::execute() {
 
 // DONE: ADD - Adds registers A and B. Sum is stored in A. The overflow and
 // zero-result bits are set or cleared
-ADD::ADD(Memory &givenMemory) : Instruction(givenMemory, "ADD", "NONE", "") {}
+ADD::ADD(ALI &givenMemory) : Instruction(givenMemory, "ADD", "NONE", "") {}
 void ADD::execute() {
 	if (mem->registerA < 0 && mem->registerB < 0 &&
 			(mem->registerA + mem->registerB) > 0 ||
@@ -115,10 +115,10 @@ void ADD::execute() {
 	mem->pc += 1;
 }
 // DONE: HLT - Terminates program execution.
-HLT::HLT(Memory &givenMemory) : Instruction(givenMemory, "HLT", "NONE", "") {}
+HLT::HLT(ALI &givenMemory) : Instruction(givenMemory, "HLT", "NONE", "") {}
 void HLT::execute() { mem->pc = -1; }
 
-Instruction *parseInstruction(std::string line, Memory &memory) {
+Instruction *parseInstruction(std::string line, ALI &memory) {
 	std::string instruction = line.substr(0, 3);
 	std::string arg = "";
 	if (line.length() > 3) {

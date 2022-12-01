@@ -1,11 +1,11 @@
-#include "Memory.h"
+#include "ALI.h"
 #include "Instructions.h"
 #include <iostream>
 #include <string>
 #include <unordered_map>
 
 // Constructor
-Memory::Memory() {
+ALI::ALI() {
 	internalProgramArray = new Instruction *[128];
 	for (int i = 0; i < 128; i++) {
 		internalProgramArray[i] = nullptr;
@@ -18,7 +18,7 @@ Memory::Memory() {
 	loopWarn = false;
 }
 // Destructor
-Memory::~Memory() {
+ALI::~ALI() {
 	for (int i = 0; i < 128; i++) {
 		delete internalProgramArray[i];
 	}
@@ -28,7 +28,7 @@ Memory::~Memory() {
 }
 
 // Executing a single line of instruction
-void Memory::executeSingle() {
+void ALI::executeSingle() {
 	internalProgramArray[pc]->execute();
 	curhc += 1;
 	if (prevhc + 1000 == curhc) {
@@ -37,15 +37,15 @@ void Memory::executeSingle() {
 }
 
 // Check if pc is beyond its bounds, if so an end has been reached
-bool Memory::reachedEnd() {
+bool ALI::reachedEnd() {
 	if (pc >= 128 || pc < 0)
 		return true;
 	return false;
 }
 
-// Allow memory to be printed to console
-std::string Memory::to_s() {
-	// DONE: implement printing memory
+// Allow ALI to be printed to console
+std::string ALI::to_s() {
+	// DONE: implement printing ALI
 
 	// Print instructions first
 	std::string returnString = _title("Instructions", '-');
@@ -84,13 +84,13 @@ std::string Memory::to_s() {
 }
 
 // DONE: Implement _title
-std::string Memory::_title(std::string s, char delimiter) {
+std::string ALI::_title(std::string s, char delimiter) {
 	int sidelength = (50 - s.length()) / 2;
 	std::string side = std::string(sidelength, delimiter);
 	return side + s + side + "\n";
 }
 // DONE: Implement printing symbols
-std::string Memory::printSymbolMap(std::unordered_map<std::string, int> map) {
+std::string ALI::printSymbolMap(std::unordered_map<std::string, int> map) {
 	std::string s;
 	for (auto &pair : map) {
 		s += "{" + pair.first + ": " + std::to_string(pair.second) + "}\n";
