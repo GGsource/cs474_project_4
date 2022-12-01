@@ -7,6 +7,9 @@
 // Constructor
 Memory::Memory() {
 	internalProgramArray = new SAL *[128];
+	for (int i = 0; i < 128; i++) {
+		internalProgramArray[i] = nullptr;
+	}
 	internalDataArray = new std::string[128];
 	registerA = registerB = pc = zeroResultBit = overflowBit = prevhc = curhc =
 		0;
@@ -43,10 +46,10 @@ std::string Memory::to_s() {
 	// Print instructions first
 	std::string returnString = _title("Instructions");
 	for (int i = 0; i < 128; i++) {
-		if (this->internalProgramArray[i] != NULL) {
+		if (this->internalProgramArray[i] != nullptr) {
 			// DEBUGGING:
-			std::cout << "Inside loop, about to print out an instruction..."
-					  << std::endl;
+			std::cout << "Inside loop iteration " << i
+					  << ", about to print out an instruction..." << std::endl;
 			returnString +=
 				std::to_string(i) + ". " + internalProgramArray[i]->to_s();
 			if (i == this->pc) {

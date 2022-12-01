@@ -49,17 +49,13 @@ int main() {
 	// Populate the program array with instructions
 	std::string line;
 	int i = 0;
-	while (i >= 127 && getline(input_file, line)) {
+	while (i <= 127 && getline(input_file, line)) {
 		mem.internalProgramArray[i] = parseInstruction(line, mem);
 		i += 1;
 	}
 
 	// DEBUGGING:
 	std::cout << "Successfully parsed file line by line!" << std::endl;
-	// DEBUGGING:
-	std::cout << "internalProgramArray:" << std::endl;
-	std::cout << "[0]: " << (*(mem.internalProgramArray)[0]).to_s()
-			  << std::endl;
 
 	// DEBUGGING:
 	std::cout << "Now entering main loop..." << std::endl;

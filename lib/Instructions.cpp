@@ -8,7 +8,7 @@ SAL::SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
 		 std::string givenArg)
 	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {
 	// DEBUGGING:
-	std::cout << "SAL Instructor called!" << std::endl;
+	std::cout << "SAL Constructor called!" << std::endl;
 }
 
 // DONE: Implement printing SAL
@@ -18,7 +18,8 @@ std::string SAL::to_s() {
 		<< "Now inside instruction print function! About to access opCode..."
 		<< std::endl;
 	// DEBUGGING:
-	std::cout << "opCode is " + opCode + "btw" << std::endl;
+	std::cout << "opCode length is " + std::to_string(opCode.length()) + " btw "
+			  << std::endl;
 	std::string s;
 
 	if (!opCode.empty()) {
@@ -139,8 +140,17 @@ void HLT::execute() { mem->pc = -1; }
 
 SAL *parseInstruction(std::string line, Memory &memory) {
 	// TESTME: this part is likely to be wrong
-	std::string instruction = line.substr(0, line.find(""));
-	std::string arg = line.substr(line.find(""));
+	// DEBUGGING:
+	std::cout << "Parsing the following line:" << std::endl;
+	std::cout << line << std::endl;
+
+	std::string instruction = line.substr(0, 3);
+	std::string arg = line.substr(3);
+
+	// DEBUGGING:
+	std::cout << "Line has been separated into... " << std::endl;
+	std::cout << "1. '" << instruction << "'" << std::endl;
+	std::cout << "2. '" << arg << "'" << std::endl;
 
 	if (instruction == "DEC") {
 		return new DEC(arg, memory);
@@ -158,7 +168,7 @@ SAL *parseInstruction(std::string line, Memory &memory) {
 	} else if (instruction == "JMP") {
 		return new JMP(arg, memory);
 
-	} else if (instruction == "JXS") {
+	} else if (instruction == "JZS" || instruction == "JVS") {
 		return new JXS(arg, instruction, memory);
 
 	} else if (instruction == "ADD") {
@@ -166,5 +176,5 @@ SAL *parseInstruction(std::string line, Memory &memory) {
 	} else if (instruction == "HLT") {
 		return new HLT(memory);
 	}
-	return NULL;
+	return nullptr;
 }
