@@ -19,5 +19,6 @@ class Memory {
 	std::string printSymbolMap(std::unordered_map<std::string, int> map);
 
 	Memory();
+	~Memory();
 };
 #endif

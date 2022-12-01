@@ -16,6 +16,14 @@ Memory::Memory() {
 	mc = 0;
 	symbolAddresses = new std::unordered_map<std::string, int>;
 	loopWarn = false;
+	std::cout << "Memory Constructor Called!" << std::endl; // DEBUGGING
+}
+// Destructor
+Memory::~Memory() {
+	delete[] internalProgramArray;
+	delete[] internalDataArray;
+	delete symbolAddresses;
+	std::cout << "Memory Destructor Called!" << std::endl; // DEBUGGING
 }
 
 // Executing a single line of instruction
@@ -48,8 +56,7 @@ std::string Memory::to_s() {
 				returnString += " <===== PC is currently here";
 			}
 			returnString += "\n";
-		} else
-			returnString += std::to_string(i) + ". [Invalid/Empty line]\n";
+		}
 	}
 	// Print data section next
 	returnString += _title("Memory");
