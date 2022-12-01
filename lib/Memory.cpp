@@ -6,7 +6,7 @@
 
 // Constructor
 Memory::Memory() {
-	internalProgramArray = new SAL *[128];
+	internalProgramArray = new SAL *[129];
 	for (int i = 0; i < 128; i++) {
 		internalProgramArray[i] = nullptr;
 	}
@@ -20,6 +20,9 @@ Memory::Memory() {
 }
 // Destructor
 Memory::~Memory() {
+	for (int i = 0; i < 128; i++) {
+		delete internalProgramArray[i];
+	}
 	delete[] internalProgramArray;
 	delete[] internalDataArray;
 	delete symbolAddresses;
