@@ -52,13 +52,14 @@ std::string Memory::to_s() {
 			returnString += std::to_string(i) + ". [Invalid/Empty line]\n";
 	}
 	// Print data section next
+	returnString += _title("Memory");
 	if (this->mc > 0) {
-		returnString += _title("Memory");
 		for (int i = 0; i < this->mc; i++) {
 			returnString += std::to_string(i + 128) + ". " +
 							this->internalDataArray[i] + "\n";
 		}
 	} else {
+		// TODO: Make this prettier
 		returnString += "Memory is currently empty.\n";
 	}
 

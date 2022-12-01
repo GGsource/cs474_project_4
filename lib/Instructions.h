@@ -12,6 +12,7 @@ class SAL {
 
 	SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
 		std::string givenArg);
+	virtual ~SAL();
 	virtual void execute() = 0;
 	std::string to_s();
 };

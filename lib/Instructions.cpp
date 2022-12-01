@@ -6,7 +6,9 @@
 // SAL Constructor
 SAL::SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
 		 std::string givenArg)
-	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {}
+	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {
+	std::cout << "Sal Constructor Called." << std::endl; // DEBUGGING
+}
 
 // DONE: Implement printing SAL
 std::string SAL::to_s() {
@@ -23,6 +25,9 @@ std::string SAL::to_s() {
 }
 // TODO: SAL Needs a virtual destructor that derived classes can call
 // TODO: Use valgrind to check for leaks
+SAL::~SAL() {
+	std::cout << "Sal Destructor Called!" << std::endl; // DEBUGGING
+}
 
 // DONE: DEC - Declares a symbolic variable & stores in memory
 DEC::DEC(std::string givenSymbol, Memory &givenMemory)
