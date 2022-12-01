@@ -15,7 +15,7 @@ class Memory {
 	void executeSingle(); // Executes one line
 	bool reachedEnd();	  // Check if pc is out of bounds
 	std::string to_s();	  // Make memory printable
-	std::string _title(std::string);
+	std::string _title(std::string title, char delimiter);
 	std::string printSymbolMap(std::unordered_map<std::string, int> map);
 
 	Memory();

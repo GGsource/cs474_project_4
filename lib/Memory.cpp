@@ -6,7 +6,7 @@
 
 // Constructor
 Memory::Memory() {
-	internalProgramArray = new SAL *[129];
+	internalProgramArray = new SAL *[128];
 	for (int i = 0; i < 128; i++) {
 		internalProgramArray[i] = nullptr;
 	}
@@ -16,7 +16,6 @@ Memory::Memory() {
 	mc = 0;
 	symbolAddresses = new std::unordered_map<std::string, int>;
 	loopWarn = false;
-	std::cout << "Memory Constructor Called!" << std::endl; // DEBUGGING
 }
 // Destructor
 Memory::~Memory() {
@@ -26,7 +25,6 @@ Memory::~Memory() {
 	delete[] internalProgramArray;
 	delete[] internalDataArray;
 	delete symbolAddresses;
-	std::cout << "Memory Destructor Called!" << std::endl; // DEBUGGING
 }
 
 // Executing a single line of instruction
@@ -50,46 +48,45 @@ std::string Memory::to_s() {
 	// DONE: implement printing memory
 
 	// Print instructions first
-	std::string returnString = _title("Instructions");
+	std::string returnString = _title("Instructions", '-');
 	for (int i = 0; i < 128; i++) {
 		if (this->internalProgramArray[i] != nullptr) {
 			returnString +=
 				std::to_string(i) + ". " + internalProgramArray[i]->to_s();
 			if (i == this->pc) {
-				returnString += " <===== PC is currently here";
+				returnString += "      <===== PC is currently here";
 			}
 			returnString += "\n";
 		}
 	}
 	// Print data section next
-	returnString += _title("Memory");
+	returnString += _title("Memory", '-');
 	if (this->mc > 0) {
 		for (int i = 0; i < this->mc; i++) {
 			returnString += std::to_string(i + 128) + ". " +
 							this->internalDataArray[i] + "\n";
 		}
 	} else {
-		// TODO: Make this prettier
-		returnString += "Memory is currently empty.\n";
+		returnString += _title("Memory is currently empty.", ' ');
 	}
 
 	// Print Bits and registers
-	returnString += _title("Bits & Regs");
+	returnString += _title("Bits & Regs", '-');
 	returnString +=
 		"zeroResultBit = " + std::to_string(this->zeroResultBit) + "\n";
 	returnString += "overflowBit = " + std::to_string(this->overflowBit) + "\n";
 	returnString += "registerA = " + std::to_string(this->registerA) + "\n";
 	returnString += "registerB = " + std::to_string(this->registerB) + "\n";
-	returnString += _title("Symbol Table");
+	returnString += _title("Symbol Table", '-');
 	returnString += printSymbolMap(*(this->symbolAddresses));
 
 	return returnString;
 }
 
 // DONE: Implement _title
-std::string Memory::_title(std::string s) {
+std::string Memory::_title(std::string s, char delimiter) {
 	int sidelength = (50 - s.length()) / 2;
-	std::string side = std::string(sidelength, '-');
+	std::string side = std::string(sidelength, delimiter);
 	return side + s + side + "\n";
 }
 // DONE: Implement printing symbols
