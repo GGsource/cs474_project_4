@@ -14,6 +14,8 @@
 #include <ostream>
 #include <string>
 
+// TODO: Make readme.md file for graders
+
 // Function for trimming the whitespace off of strings
 std::string &rtrim(std::string &givenString,
 				   const char *terminatingChar = " \t\n\r\f\v") {
