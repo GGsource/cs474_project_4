@@ -14,7 +14,7 @@ class Instruction {
 				std::string givenArg);
 	virtual ~Instruction();
 	virtual void execute() = 0;
-	std::string to_s();
+	std::string print();
 };
 
 class DEC : public Instruction {

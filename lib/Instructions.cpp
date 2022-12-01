@@ -10,7 +10,7 @@ Instruction::Instruction(ALI &memory, std::string givenOpCode,
 	  argValue(givenArg) {}
 
 // DONE: Implement printing SAL
-std::string Instruction::to_s() {
+std::string Instruction::print() {
 	std::string s;
 
 	if (!printString.empty()) {

@@ -52,7 +52,7 @@ std::string ALI::to_s() {
 	for (int i = 0; i < 128; i++) {
 		if (this->internalProgramArray[i] != nullptr) {
 			returnString +=
-				std::to_string(i) + ". " + internalProgramArray[i]->to_s();
+				std::to_string(i) + ". " + internalProgramArray[i]->print();
 			if (i == this->pc) {
 				returnString += "      <===== PC is currently here";
 			}
