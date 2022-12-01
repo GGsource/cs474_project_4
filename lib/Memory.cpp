@@ -48,7 +48,8 @@ std::string Memory::to_s() {
 				returnString += " <===== PC is currently here";
 			}
 			returnString += "\n";
-		}
+		} else
+			returnString += std::to_string(i) + ". [Invalid/Empty line]\n";
 	}
 	// Print data section next
 	if (this->mc > 0) {
