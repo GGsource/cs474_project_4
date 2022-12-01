@@ -6,9 +6,9 @@
 class Instruction {
   public:
 	ALI *mem;
-	std::string opCode = "";
+	std::string printString = "";
 	std::string argType = "";
-	std::string arg = "";
+	std::string argValue = "";
 
 	Instruction(ALI &memory, std::string givenOpCode, std::string givenArgType,
 				std::string givenArg);

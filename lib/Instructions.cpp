@@ -6,18 +6,19 @@
 // DONE SAL Constructor
 Instruction::Instruction(ALI &memory, std::string givenOpCode,
 						 std::string givenArgType, std::string givenArg)
-	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {}
+	: mem(&memory), printString(givenOpCode), argType(givenArgType),
+	  argValue(givenArg) {}
 
 // DONE: Implement printing SAL
 std::string Instruction::to_s() {
 	std::string s;
 
-	if (!opCode.empty()) {
-		s += opCode;
+	if (!printString.empty()) {
+		s += printString;
 	};
 
-	if (!arg.empty()) {
-		s += " with " + argType + " argument of " + arg;
+	if (!argValue.empty()) {
+		s += " with " + argType + " argument of " + argValue;
 	}
 	return s;
 }
@@ -29,7 +30,7 @@ DEC::DEC(std::string givenSymbol, ALI &givenMemory)
 	: Instruction(givenMemory, "DEC", "STRING", givenSymbol) {}
 void DEC::execute() {
 	mem->internalDataArray[mem->mc] = " ";
-	mem->symbolAddresses->insert({arg, mem->mc});
+	mem->symbolAddresses->insert({argValue, mem->mc});
 	mem->mc += 1;
 	mem->pc += 1;
 }
@@ -37,12 +38,12 @@ void DEC::execute() {
 LDX::LDX(std::string instruction, std::string givenSymbol, ALI &givenMemory)
 	: Instruction(givenMemory, instruction, "STRING", givenSymbol) {}
 void LDX::execute() {
-	if (opCode == "LDA") {
-		mem->registerA =
-			std::stoi(mem->internalDataArray[mem->symbolAddresses->at(arg)]);
+	if (printString == "LDA") {
+		mem->registerA = std::stoi(
+			mem->internalDataArray[mem->symbolAddresses->at(argValue)]);
 	} else {
-		mem->registerB =
-			std::stoi(mem->internalDataArray[mem->symbolAddresses->at(arg)]);
+		mem->registerB = std::stoi(
+			mem->internalDataArray[mem->symbolAddresses->at(argValue)]);
 	}
 	mem->pc += 1;
 }
@@ -52,7 +53,7 @@ void LDX::execute() {
 LDI::LDI(std::string givenVal, ALI &givenMemory)
 	: Instruction(givenMemory, "LDI", "NUMBER", givenVal) {}
 void LDI::execute() {
-	mem->registerA = std::stoi(arg);
+	mem->registerA = std::stoi(argValue);
 	mem->pc += 1;
 }
 
@@ -61,7 +62,7 @@ void LDI::execute() {
 STR::STR(std::string givenSymbol, ALI &givenMemory)
 	: Instruction(givenMemory, "STR", "STRING", givenSymbol) {}
 void STR::execute() {
-	mem->internalDataArray[mem->symbolAddresses->at(arg)] =
+	mem->internalDataArray[mem->symbolAddresses->at(argValue)] =
 		std::to_string(mem->registerA);
 	mem->pc += 1;
 }
@@ -79,16 +80,16 @@ void XCH::execute() {
 // memory.
 JMP::JMP(std::string givenAddress, ALI &givenMemory)
 	: Instruction(givenMemory, "JMP", "NUMBER", givenAddress) {}
-void JMP::execute() { mem->pc = std::stoi(arg); }
+void JMP::execute() { mem->pc = std::stoi(argValue); }
 
 // DONE: JXS - JZS & JVS Transfer control to instruction at address number if
 // the zero-result bit or overlfow bit is set respectively.
 JXS::JXS(std::string givenAddress, std::string instruction, ALI &givenMemory)
 	: Instruction(givenMemory, instruction, "NUMBER", givenAddress) {}
 void JXS::execute() {
-	if ((opCode == "JZS" && mem->zeroResultBit == 1) ||
-		(opCode == "JVS" && mem->overflowBit == 1)) {
-		mem->pc = std::stoi(arg);
+	if ((printString == "JZS" && mem->zeroResultBit == 1) ||
+		(printString == "JVS" && mem->overflowBit == 1)) {
+		mem->pc = std::stoi(argValue);
 	} else {
 		mem->pc += 1;
 	}
