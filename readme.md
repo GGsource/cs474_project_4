@@ -28,7 +28,7 @@
 
 ### Option B
 
-1. If neither of the above is an option, the project can be compiled directly by typing the following on the command line: `g++ .\lib\main.cpp .\lib\Instructions.cpp .\lib\ALI.cpp -Ilib -o project4`.
+1. If neither of the above is an option, the project can be compiled directly by typing the following on the command line: `g++ .\src\main.cpp .\src\Instructions.cpp .\src\ALI.cpp -Isrc -o project4`.
 2. Now that it is compiled, do `.\project4` to run the compiled file.
 3. pass a valid file name when prompted. The file may be located in the `tests` folder or it may simply be in the `root directory`.
 
