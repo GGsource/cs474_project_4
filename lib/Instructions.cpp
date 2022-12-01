@@ -6,41 +6,19 @@
 // SAL Constructor
 SAL::SAL(Memory &memory, std::string givenOpCode, std::string givenArgType,
 		 std::string givenArg)
-	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {
-	// DEBUGGING:
-	std::cout << "SAL Constructor called!" << std::endl;
-}
+	: mem(&memory), opCode(givenOpCode), argType(givenArgType), arg(givenArg) {}
 
 // DONE: Implement printing SAL
 std::string SAL::to_s() {
-	// DEBUGGING:
-	std::cout
-		<< "Now inside instruction print function! About to access opCode..."
-		<< std::endl;
-	// DEBUGGING:
-	std::cout << "opCode length is " + std::to_string(opCode.length()) + " btw "
-			  << std::endl;
 	std::string s;
 
 	if (!opCode.empty()) {
 		s += opCode;
 	};
 
-	// DEBUGGING:
-	std::cout
-		<< "Successfully accessed opCode, now going to check if arg is empty..."
-		<< std::endl;
-
 	if (!arg.empty()) {
-		// DEBUGGING:
-		std::cout << "Inside arg checking statement.. now going to use argtype"
-				  << std::endl;
 		s += " with " + argType + " argument of " + arg;
 	}
-
-	// DEBUGGING:
-	std::cout << "Successfully checked arg!" << std::endl;
-
 	return s;
 }
 // TODO: SAL Needs a virtual destructor that derived classes can call
@@ -139,18 +117,8 @@ HLT::HLT(Memory &givenMemory) : SAL(givenMemory, "HLT", "NONE", "") {}
 void HLT::execute() { mem->pc = -1; }
 
 SAL *parseInstruction(std::string line, Memory &memory) {
-	// TESTME: this part is likely to be wrong
-	// DEBUGGING:
-	std::cout << "Parsing the following line:" << std::endl;
-	std::cout << line << std::endl;
-
 	std::string instruction = line.substr(0, 3);
 	std::string arg = line.substr(3);
-
-	// DEBUGGING:
-	std::cout << "Line has been separated into... " << std::endl;
-	std::cout << "1. '" << instruction << "'" << std::endl;
-	std::cout << "2. '" << arg << "'" << std::endl;
 
 	if (instruction == "DEC") {
 		return new DEC(arg, memory);

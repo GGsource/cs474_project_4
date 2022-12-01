@@ -38,27 +38,16 @@ bool Memory::reachedEnd() {
 std::string Memory::to_s() {
 	// DONE: implement printing memory
 
-	// DEBUGGING:
-	std::cout << "Now inside memory print function, about to print interal "
-				 "program array..."
-			  << std::endl;
-
 	// Print instructions first
 	std::string returnString = _title("Instructions");
 	for (int i = 0; i < 128; i++) {
 		if (this->internalProgramArray[i] != nullptr) {
-			// DEBUGGING:
-			std::cout << "Inside loop iteration " << i
-					  << ", about to print out an instruction..." << std::endl;
 			returnString +=
 				std::to_string(i) + ". " + internalProgramArray[i]->to_s();
 			if (i == this->pc) {
 				returnString += " <===== PC is currently here";
 			}
 			returnString += "\n";
-			// DEBUGGING:
-			std::cout << "Successfully retrieved instruction as string!"
-					  << std::endl;
 		}
 	}
 	// Print data section next
@@ -82,7 +71,7 @@ std::string Memory::to_s() {
 	returnString += _title("Symbol Table");
 	returnString += printSymbolMap(*(this->symbolAddresses));
 
-	return "called Memory's to_s...";
+	return returnString;
 }
 
 // DONE: Implement _title

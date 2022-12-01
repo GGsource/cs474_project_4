@@ -44,8 +44,6 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	// DEBUGGING:
-	std::cout << "Now reading file line by line..." << std::endl;
 	// Populate the program array with instructions
 	std::string line;
 	int i = 0;
@@ -54,15 +52,8 @@ int main() {
 		i += 1;
 	}
 
-	// DEBUGGING:
-	std::cout << "Successfully parsed file line by line!" << std::endl;
-
-	// DEBUGGING:
-	std::cout << "Now entering main loop..." << std::endl;
 	// Main Loop
 	while (!mem.reachedEnd()) {
-		// DEBUGGING:
-		std::cout << "inside main loop, about to print memory..." << std::endl;
 		// First print the memory structure
 		std::cout << mem.to_s() << std::endl;
 		// Now print the command options
