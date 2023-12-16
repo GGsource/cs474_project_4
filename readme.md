@@ -1,4 +1,4 @@
-# Welcome to CS 474's Project 4
+# CS 474's Project 4: Assembly Language Interpreter
 
 ## Author: Geo Gonzalez
 
